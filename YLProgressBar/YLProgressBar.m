@@ -27,7 +27,7 @@
 #import "YLProgressBar.h"
 
 // Sizes
-const NSInteger YLProgressBarSizeInset    = 1; //px
+const NSInteger YLProgressBarSizeInset    = 0; //px
 
 // Animation times
 const NSTimeInterval YLProgressBarStripesAnimationTime = 1.0f / 30.0f; // s
@@ -209,10 +209,7 @@ const NSTimeInterval YLProgressBarProgressTime         = 0.25f;        // s
 {
     progressTintColor = (progressTintColor) ? progressTintColor : [UIColor blueColor];
     
-    const CGFloat *c    = CGColorGetComponents(progressTintColor.CGColor);
-    UIColor *leftColor  = [UIColor colorWithRed:(c[0] / 2.0f) green:(c[1] / 2.0f) blue:(c[2] / 2.0f) alpha:(c[3])];
-    UIColor *rightColor = progressTintColor;
-    NSArray *colors     = @[leftColor, rightColor];
+    NSArray *colors     = @[progressTintColor, progressTintColor];
     
     [self setProgressTintColors:colors];
 }
@@ -370,13 +367,13 @@ const NSTimeInterval YLProgressBarProgressTime         = 0.25f;        // s
     
     CGContextSaveGState(context);
     {
-        CGFloat trackHeight = (_type == YLProgressBarTypeRounded) ? CGRectGetHeight(rect) - 1 : CGRectGetHeight(rect);
+        CGFloat trackHeight = (_type == YLProgressBarTypeRounded) ? CGRectGetHeight(rect) - 0 : CGRectGetHeight(rect);
         
         // Draw the track
         [self.trackTintColor set];
         UIBezierPath* roundedRect = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, CGRectGetWidth(rect), trackHeight) cornerRadius:_cornerRadius];
         [roundedRect fill];
-        
+#if 0
         if (_type == YLProgressBarTypeRounded)
         {
             // Draw the white shadow
@@ -393,6 +390,7 @@ const NSTimeInterval YLProgressBarProgressTime         = 0.25f;        // s
                                                             cornerRadius:0];
             [glow stroke];
         }
+#endif
     }
     CGContextRestoreGState(context);
 }
